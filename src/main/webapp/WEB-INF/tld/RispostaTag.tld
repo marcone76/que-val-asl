@@ -1,0 +1,22 @@
+<taglib>  
+	    <tlib-version>1.0</tlib-version>
+	    <jsp-version>2.0</jsp-version>
+	    <short-name>Risposta TLD</short-name>
+	    <tag>
+	        <name>Risposta</name>
+	        <tag-class>it.istruzione.ossscudig.customTag.RispostaTag</tag-class>
+	        <body-content>empty</body-content>
+	        
+	      
+	    <attribute>
+	        <name>idDomanda</name>
+	        <required>true</required>
+	    </attribute> 
+	    
+	     <attribute>
+	        <name>gruppoVoce</name>
+	        <required>true</required>
+	    </attribute>   
+	    
+	    </tag>
+</taglib>

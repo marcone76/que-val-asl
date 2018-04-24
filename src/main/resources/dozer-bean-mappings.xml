@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+          
+       <mapping>   
+          <class-a>it.istruzione.ossscudig.model.entity.Tod1002Anagrafequestionario</class-a>
+   		  <class-b>it.istruzione.ossscudig.model.dto.QuestionarioDTO</class-b>
+		   <field>
+			  <a>desQst</a>
+			  <b>nome</b>
+		   </field>
+		   <field>
+			  <a>codQst</a>
+			  <b>codiceQuestionario</b>
+		   </field>
+       </mapping>
+       
+       
+        <mapping>   
+          <class-a>it.istruzione.ossscudig.model.entity.Tod1003Anagrafesezione</class-a>
+   		  <class-b>it.istruzione.ossscudig.model.dto.SezioneDTO</class-b>
+		   <field>
+			  <a>codSez</a>
+			  <b>idSezione</b>
+		   </field>
+		   <field>
+			  <a>desSez</a>
+			  <b>descrizioneSezione</b>
+		   </field>
+       </mapping>
+       
+       
+        <mapping>   
+          <class-a>it.istruzione.ossscudig.model.entity.Vod1001ModTabRis</class-a>
+   		  <class-b>it.istruzione.ossscudig.model.dto.ExportRispostaDTO</class-b>
+		   <field>
+			  <a>id.codForScu</a>
+			  <b>codiceScuola</b>
+		   </field>
+		   <field>
+			  <a>id.codEdi</a>
+			  <b>codiceEdificio</b>
+		   </field>
+		   <field>
+			  <a>id.codIdeDmd</a>
+			  <b>codiceDomanda</b>
+		   </field>
+		   <field>
+			  <a>desDmd</a>
+			  <b>descrizioneDomanda</b>
+		   </field>
+		   <field>
+			  <a>desQst</a>
+			  <b>descrizioneQuestionario</b>
+		   </field>
+		   <field>
+			  <a>desSez</a>
+			  <b>descrizioneSezione</b>
+		   </field>
+		   <field>
+			  <a>valRispp</a>
+			  <b>descrizioneRisposta</b>
+		   </field>
+       </mapping>
+       <mapping>   
+          <class-a>it.istruzione.ossscudig.model.entity.Vod1002ModTabRisVal</class-a>
+   		  <class-b>it.istruzione.ossscudig.model.dto.ExportRispostaDTO</class-b>
+		   <field>
+			  <a>id.codForScu</a>
+			  <b>codiceScuola</b>
+		   </field>
+		   <field>
+			  <a>id.codEdi</a>
+			  <b>codiceEdificio</b>
+		   </field>
+		   <field>
+			  <a>id.codIdeDmd</a>
+			  <b>codiceDomanda</b>
+		   </field>
+		   <field>
+			  <a>desDmd</a>
+			  <b>descrizioneDomanda</b>
+		   </field>
+		   <field>
+			  <a>desQst</a>
+			  <b>descrizioneQuestionario</b>
+		   </field>
+		   <field>
+			  <a>desSez</a>
+			  <b>descrizioneSezione</b>
+		   </field>
+		   <field>
+			  <a>valRispp</a>
+			  <b>descrizioneRisposta</b>
+		   </field>
+       </mapping>
+
+
+</mappings>

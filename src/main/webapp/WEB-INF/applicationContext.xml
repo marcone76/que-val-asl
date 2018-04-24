@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:sec="http://www.springframework.org/schema/security"
+		xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+		xmlns:conf-sec="http://cxf.apache.org/configuration/security"
+		xmlns:cxf="http://cxf.apache.org/core"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+			http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+			http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd
+			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<import resource="classpath:/META-INF/spring-app-miur.xml" />
+
+	<!-- Scan di tutti i componenti business -->
+	<context:component-scan	base-package="it.istruzione.ossscudig.services,it.istruzione.ossscudig.services.*,it.istruzione.ossscudig.model.*" />
+
+	<context:property-placeholder
+		location="classpath*:*.properties,file:${jboss.server.config.dir}/miur.properties,file:${jboss.server.config.dir}/oss-scu-dig-web.properties"
+		ignore-resource-not-found="true" />
+
+	<sec:http auto-config="false" use-expressions="true" entry-point-ref="http403EntryPoint">
+
+		<sec:intercept-url pattern="/" access="isAuthenticated()" />
+		<sec:intercept-url pattern="/index.html" access="isAuthenticated()" />
+		<sec:intercept-url pattern="/**" access="!hasRole('ROLE_ANONYMOUS')" />
+
+		<sec:logout logout-url="/logout" logout-success-url="${link.esci}" />
+		<sec:custom-filter position="PRE_AUTH_FILTER" ref="requestHeaderAuthenticationFilter" />
+	</sec:http>
+
+	<bean id="requestHeaderAuthenticationFilter" class="it.istruzione.commons.security.impl.AuthFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+	</bean>
+
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider ref="preAuthAuthProvider" />
+	</sec:authentication-manager>
+
+	<bean id="preAuthAuthProvider"
+		class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+		<property name="preAuthenticatedUserDetailsService">
+			<bean id="userDetailsServiceWrapper"
+				class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+				<property name="userDetailsService" ref="dbProfUserDetailService" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="dbProfUserDetailService"
+		class="it.istruzione.commons.security.impl.DBProfUserDetailServiceMOC">
+		<property name="profili">
+			<map>
+				<entry key="OTSURVEY_UTE_SCU" value="Utente Scuola" />
+			 	<entry key="OTSURVEY_UTE_UFF" value="Utente Ufficio" />  
+				<entry key="OTSURVEY_UTE_MON" value="Utente Monitoraggio" />
+			</map>
+		</property>
+		<property name="contesti">
+			<map>
+				<entry key="OTSURVEY_UTE_SCU">
+					<map>
+						<entry key="LETE010002" value="LETE010002 - GRAZIA DELEDDA" />
+						<entry key="MEIC88600X" value="MEIC88600X - MEIC88600X" />
+						<entry key="TOEE16800L" value="TOEE16800L - TOEE16800L" />
+						<entry key="AGIS00100X" value="AGIS00100X - AGIS00100X" />
+						<entry key="AGIC84300T" value="AGIC84300T - AGIC84300T" />
+						<entry key="TOEE10500D" value="TOEE10500D - TOEE10500D" />
+						<entry key="TVRH00702X" value="TVRH00702X - TVRH00702X" />
+						<entry key="LC1E00100D" value="LC1E00100D - SCUOLA PRIMARIA CATERINA CITTADINI (paritaria primo ciclo) " />
+						<entry key="MIPL08500Q" value="MIPL08500Q - LICEO LINGUISTICO MARCELLINE (paritaria secondo ciclo)" />
+					</map>     
+				</entry>
+				<entry key="OTSURVEY_UTE_SCU_DS">
+					<map>
+						<entry key="LETE010002" value="LETE010002 - GRAZIA DELEDDA" />
+						<entry key="MEIC88600X" value="MEIC88600X - MEIC88600X" />
+						<entry key="TOEE16800L" value="TOEE16800L - TOEE16800L" />
+						<entry key="AGIS00100X" value="AGIS00100X - AGIS00100X" />
+						<entry key="LC1E00100D" value="LC1E00100D - SCUOLA PRIMARIA CATERINA CITTADINI (paritaria primo ciclo) " />
+						<entry key="MIPL08500Q" value="MIPL08500Q - LICEO LINGUISTICO MARCELLINE (paritaria secondo ciclo)" />
+					</map>     
+				</entry>
+				<entry key="OTSURVEY_UTE_MON">
+					<map>
+						<entry key="UTE1" value="UTENTE 1" />
+					</map>     
+				</entry>
+				<entry key="OTSURVEY_UTE_UFF">
+					<map>
+						<entry key="UTE2" value="UTENTE 2" />
+					</map>     
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- DataSource, Hibernate, ecc. -->
+	<jee:jndi-lookup jndi-name="java:jboss/datasources/ossscudigDS" id="dataSource" expected-type="javax.sql.DataSource" />
+
+ 	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="it.istruzione.ossscudig.model.entity" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<!-- <prop key="hibernate.order_inserts">true</prop>
+				<prop key="hibernate.order_updates">true</prop>
+				<prop key="hibernate.jdbc.batch_size">25</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="showSql" value="${ossscudigweb.hibernate.show_sql}" />
+		<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+	<jpa:repositories
+		base-package="it.istruzione.ossscudig.repository, it.istruzione.ossscudig.repository.*"
+		entity-manager-factory-ref="entityManagerFactory"
+		transaction-manager-ref="transactionManager" />
+	
+	
+ 
+	<bean id="org.dozer.Mapper" class="org.dozer.DozerBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>dozer-bean-mappings.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean name="regExpInputValidator" class="it.istruzione.ossscudig.validator.RegExpInputValidator"/>
+	<bean name="sezioneValidator" class="it.istruzione.ossscudig.validator.SezioneValidator"/>
+
+	<bean name="inputValidatorChain" class="it.istruzione.ossscudig.validator.InputValidatorChain">
+		<property name="validators">
+			<list>
+				<ref bean="sezioneValidator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="hibernateListener" 
+		class="it.istruzione.commons.config.HibernateListenersConfigurer"
+		init-method="registerListeners">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="codiceProgramma" value="${application.id}" />
+	</bean>
+
+	
+
+	
+
+</beans>

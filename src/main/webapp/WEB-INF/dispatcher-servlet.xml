@@ -1,0 +1,82 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- Attivazione delle annotation standard -->
+	<context:annotation-config />
+
+	<context:property-placeholder
+		location="classpath*:*.properties,file:${jboss.server.config.dir}/miur.properties,file:${jboss.server.config.dir}/oss-scu-dig-web.properties"
+		ignore-resource-not-found="true" />
+
+	<!-- Scan di tutti i componenti web -->
+	<context:component-scan
+		base-package="it.istruzione.ossscudig.controllers,it.istruzione.ossscudig.controllers.*" />
+
+	<import resource="classpath:/META-INF/spring-web-miur.xml" />
+
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages</value>
+				<value>labels</value>
+				<value>validation</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<sec:global-method-security
+		pre-post-annotations="enabled">
+		<sec:expression-handler ref="expressionHandler" />
+	</sec:global-method-security>
+
+	<bean id="expressionHandler" class="it.istruzione.commons.handler.ExpressionHandler" />
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<bean class="it.istruzione.commons.menu.impl.CaricaMenuGestioneUtenzeSidiMOC">
+		<property name="vociMenu">
+			<map>
+				<entry key="Acquisizione Rilevazione"
+					value="#acquisizioneRilevazione?breadcrumbTitle=AcquisizioneRilevazione|OTSURVEY_UTE_SCU" />
+				<entry key="Acquisizione Rilevazione"
+					value="#acquisizioneRilevazione?breadcrumbTitle=AcquisizioneRilevazione|OTSURVEY_UTE_SCU" />
+				<entry key="Visualizza Rilevazione"
+					value="#visualizzaRilevazione?breadcrumbTitle=VisualizzaRilevazione|OTSURVEY_UTE_SCU" />
+				<entry key="Esporta Rilevazione"
+					value="#esportaRilevazione?breadcrumbTitle=EsportaRilevazione|OTSURVEY_UTE_SCU" />
+				<!-- monitoraggio rilevazione -->
+				<!-- <entry key="Monitoraggio Rilevazione" value="#monitoraggioRilevazione?breadcrumbTitle=MonitoraggioRilevazione|OTSURVAY_UTE_MON" 
+					/> -->
+				<entry key="Stato Acquisizione"
+					value="#statoAcquisizione?breadcrumbTitle=StatoAcquisizione|OTSURVEY_UTE_MON" />
+				<entry key="Andamento Acquisizione"
+					value="#andamentoAcquisizione?breadcrumbTitle=AndamentoAcquisizione|OTSURVEY_UTE_MON" />
+				<entry key="Visualizza Acquisizione"
+					value="#ricercaVisualizzaAcquisizione?breadcrumbTitle=VisualizzaAcquisizione|OTSURVEY_UTE_MON" />
+				<entry key="Esporta Acquisizione"
+					value="#esportaAcquisizione?breadcrumbTitle=EsportaAcquisizione|OTSURVEY_UTE_MON" />
+				<!-- fine monitoraggio rilevazione -->
+				<entry key="Gestione Pubblicazione"	value="#gestionePubblicazione?breadcrumbTitle=GestionePubblicazione|OTSURVEY_UTE_UFF" />
+				<entry key="Gestione Storicizzazione" value="#gestioneStoricizzazione?breadcrumbTitle=GestioneStoricizzazione|OTSURVEY_UTE_UFF" />
+				<entry key="Gestione Domande" value="#gestioneDomande?breadcrumbTitle=GestioneDomande|OTSURVEY_UTE_UFF" />
+				<entry key="Gestione Campione" value="#gestioneCampione?breadcrumbTitle=GestioneCampione|OTSURVEY_UTE_UFF" />
+				<entry key="Gestione Rilevazione" value="#gestioneRilevazione?breadcrumbTitle=GestioneRilevazione|OTSURVEY_UTE_UFF" />
+
+			</map>
+		</property>
+	</bean>
+</beans>

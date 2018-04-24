@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+	<pluginGroups></pluginGroups>
+
+	<localRepository>C:/Users/SLGDeSo/.m2/repository</localRepository>
+
+	<proxies></proxies>
+	<servers></servers>
+
+	<mirrors>
+		<!-- <mirror> <id>nexus</id> <url>http://10.15.5.8:8081/nexus/content/groups/public</url> 
+			<mirrorOf>*</mirrorOf> </mirror> -->
+
+		<mirror>
+			<id> maven-central</id>
+			<name>  Maven LOCAL</name>
+			<url>file://C:/Users/SLGDeSo/.m2/repository</url>
+			<mirrorOf>central</mirrorOf>
+		</mirror>
+
+	</mirrors>
+
+	<profiles>
+		<profile>
+			<id>selex</id>
+			<repositories>
+				<repository>
+					<id>central</id>
+					<url>http://central</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>always</updatePolicy>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>central</id>
+					<url>http://central</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+
+	<activeProfiles>
+		<activeProfile>selex</activeProfile>
+	</activeProfiles>
+</settings>
