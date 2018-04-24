@@ -1,7 +1,7 @@
 package it.istruzione.ossscudig.constant;
 
 public class Constants {
-	public static final String PREFIX_DOMsssss = "DOM_";
+	
 	public static final String PREFIX_DOM = "DOM_";
 	public static final String PREFIX_CODEDI = "_COD_EDI_";
 	public static final String DEFAULT_COD_EDI = "0";
