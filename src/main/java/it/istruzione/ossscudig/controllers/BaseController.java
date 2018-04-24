@@ -24,6 +24,8 @@ public class BaseController {
 	VisualizzaRilevazioneService visualizzaRilevazioneService;
 	
 
+	
+	
 /*	public final String DATE_PATTERN = "dd/MM/yyyy";
 	
 	//PROFILI 
